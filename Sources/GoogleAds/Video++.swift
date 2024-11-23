@@ -59,7 +59,7 @@ extension Video {
       } else {
         throw DecodingError.dataCorrupted(
           .init(
-            codingPath: [Video.CodingKeys.impression], debugDescription: "impression is missing"
+            codingPath: [Video.CodingKeys.impressions], debugDescription: "impressions is missing"
           )
         )
       }
@@ -154,7 +154,7 @@ extension Video {
       description: description,
       duration: duration,
       advertiser: advertiser,
-      impression: impressions,
+      impressions: impressions,
       trackings: trackings,
       medias: medias
     )

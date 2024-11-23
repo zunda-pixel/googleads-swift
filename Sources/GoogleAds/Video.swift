@@ -5,7 +5,7 @@ public struct Video: Codable, Sendable, Hashable {
   public var description: String?
   public var duration: Double
   public var advertiser: String?
-  public var impression: [URL]
+  public var impressions: [URL]
   public var trackings: [Tracking]
   public var medias: [Media]
 
@@ -14,7 +14,7 @@ public struct Video: Codable, Sendable, Hashable {
     case description
     case duration
     case advertiser
-    case impression
+    case impressions
     case trackings
     case medias
   }
