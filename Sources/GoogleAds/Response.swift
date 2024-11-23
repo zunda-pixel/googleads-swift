@@ -26,7 +26,7 @@ public struct Ad: Decodable, Sendable, Hashable {
   public var image: Image
   public var secondaryImage: Image?
   public var trackingUrlsAndAction: TrackingUrlsAndAction
-  public var templateId: Int
+  public var template: Template
   public var callToCction: String
   public var attribution: Attribution?
   public var images: [Image]?
@@ -46,7 +46,7 @@ public struct Ad: Decodable, Sendable, Hashable {
     case image
     case secondaryImage = "secondary_image"
     case trackingUrlsAndAction = "tracking_urls_and_actions"
-    case templateId = "template_id"
+    case template = "template_id"
     case callToCction = "call_to_action"
     case advertiser
     case attribution
@@ -73,18 +73,30 @@ public struct Ad: Decodable, Sendable, Hashable {
       forKey: .trackingUrlsAndAction
     )
     // sometime templateId is String
-    self.templateId =
-      if let templateId = try? container.decode(Int.self, forKey: .templateId) {
+    let templateId: Int =
+      if let templateId = try? container.decode(Int.self, forKey: .template) {
         templateId
-      } else if let templateId = Int(try container.decode(String.self, forKey: .templateId)) {
+      } else if let templateId = Int(try container.decode(String.self, forKey: .template)) {
         templateId
       } else {
         throw DecodingError.dataCorrupted(
           .init(
-            codingPath: container.codingPath + [CodingKeys.templateId],
+            codingPath: container.codingPath + [CodingKeys.template],
             debugDescription: "template_id is not Number"
-          ))
+          )
+        )
       }
+
+    if let template = Template(rawValue: templateId) {
+      self.template = template
+    } else {
+      throw DecodingError.dataCorrupted(
+        .init(
+          codingPath: container.codingPath + [CodingKeys.template],
+          debugDescription: "template_id is not valid AdTemplate \(templateId)"
+        )
+      )
+    }
     self.callToCction = try container.decode(String.self, forKey: .callToCction)
     // sometimes attribution is empty object it has no value, Server should return nil.
     self.attribution = try? container.decode(Attribution.self, forKey: .attribution)
