@@ -52,7 +52,7 @@ let ads = [
       creativeConversionUrlWithoutLabel: https://googleads.g.doubleclick.net/pagead/conversion/?ai=Ct7elpMpBZ4vaDb3ys8,
       useAppStoreOverlay: false
     ),
-    templateId: 2,
+    template: .small,
     callToCction: "INSTALL",
     attribution: nil,
     images: [
