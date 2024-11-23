@@ -44,7 +44,7 @@ public struct GoogleAdsClient<HTTPClient: HTTPClientProtocol & Sendable>: Sendab
     slotName: String,
     maxCount: Int = 1,
     nativeVersion: Int,
-    templates: [AdTemplate]
+    templates: [Ad.Template]
   ) async throws -> [Ad] {
     let queryItems: [URLQueryItem] = [
       .init(name: "adtest", value: self.isTest ? "on" : "off"),
