@@ -49,7 +49,8 @@ extension Video {
     }
 
     let duration = Double(
-      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2])
+      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
+    )
 
     let advertiser = try document.nodes(forXPath: "//Advertiser").first?.stringValue
 
@@ -95,6 +96,13 @@ extension Video {
           )
         )
       }
+      
+      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
+        throw DecodingError.dataCorrupted(
+          .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
+        )
+      }
+      
       guard let delivery = element.attribute(forName: "delivery")?.stringValue else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Media.CodingKeys.delivery], debugDescription: "delivery is missing")
@@ -139,6 +147,7 @@ extension Video {
       }
 
       return try Media(
+        url: url,
         delivery: delivery,
         type: type,
         bitrate: bitrate,

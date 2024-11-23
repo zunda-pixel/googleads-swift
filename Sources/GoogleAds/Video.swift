@@ -31,6 +31,7 @@ public struct Tracking: Codable, Sendable, Hashable {
 }
 
 public struct Media: Codable, Sendable, Hashable {
+  public var url: URL
   public var delivery: String
   public var type: String
   public var bitrate: Int
@@ -40,6 +41,7 @@ public struct Media: Codable, Sendable, Hashable {
   public var maintainAspectRatio: Bool
 
   enum CodingKeys: CodingKey {
+    case url
     case delivery
     case type
     case bitrate
