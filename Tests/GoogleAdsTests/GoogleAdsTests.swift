@@ -13,12 +13,12 @@ let client = GoogleAdsClient(
 
 @Test
 func fetchNativeAds() async throws {
-  let ads = try await client.fetchNativeAds(
-    slotName: "3986624511",
-    maxCount: 5,
-    nativeVersion: 3,
-    templates: [.video, .large, .medium, .small]
-  )
-
-  print(ads.map(\.headline))
+  for template in AdTemplate.allCases {
+    _ = try await client.fetchNativeAds(
+      slotName: "3986624511",
+      maxCount: 10,
+      nativeVersion: 3,
+      templates: [template]
+    )
+  }
 }
