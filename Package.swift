@@ -28,6 +28,9 @@ let package = Package(
         .product(name: "HTTPTypesFoundation", package: "swift-http-types"),
         .product(name: "HTTPClient", package: "http-client"),
         .product(name: "XMLDocument", package: "XMLDocument"),
+      ],
+      swiftSettings: [
+        .interoperabilityMode(.Cxx),
       ]
     ),
     .testTarget(
