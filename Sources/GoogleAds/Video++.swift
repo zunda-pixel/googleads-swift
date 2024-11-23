@@ -1,12 +1,20 @@
 import Foundation
 
+#if !os(macOS)
+  import XMLDocument
+#endif
+
 #if canImport(FoundationXML)
   import FoundationXML
 #endif
 
 extension Video {
   init(xmlData: Data) throws {
+    #if os(macOS)
     let document = try XMLDocument(data: xmlData)
+    #else
+    let document = try XMLDocument(data: xmlData, options: 0)
+    #endif
     guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
       throw DecodingError.dataCorrupted(
         .init(codingPath: [Video.CodingKeys.title], debugDescription: "title is missing"))
