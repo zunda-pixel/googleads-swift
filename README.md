@@ -1,4 +1,4 @@
-# googleads-swift
+# GoogleAds
 
 ```swift
 import Foundation
