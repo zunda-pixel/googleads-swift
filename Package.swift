@@ -30,7 +30,7 @@ let package = Package(
         .product(name: "XMLDocument", package: "XMLDocument"),
       ],
       swiftSettings: [
-        .interoperabilityMode(.Cxx),
+        .interoperabilityMode(.Cxx)
       ]
     ),
     .testTarget(

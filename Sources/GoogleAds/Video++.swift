@@ -11,9 +11,9 @@ import Foundation
 extension Video {
   init(xmlData: Data) throws {
     #if os(macOS)
-    let document = try XMLDocument(data: xmlData)
+      let document = try XMLDocument(data: xmlData)
     #else
-    let document = try XMLDocument(data: xmlData, options: 0)
+      let document = try XMLDocument(data: xmlData, options: 0)
     #endif
     guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
       throw DecodingError.dataCorrupted(
@@ -96,13 +96,13 @@ extension Video {
           )
         )
       }
-      
+
       guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
         )
       }
-      
+
       guard let delivery = element.attribute(forName: "delivery")?.stringValue else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Media.CodingKeys.delivery], debugDescription: "delivery is missing")
