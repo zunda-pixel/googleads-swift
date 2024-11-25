@@ -18,7 +18,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-http-types.git", from: "1.3.1"),
     .package(url: "https://github.com/zunda-pixel/http-client.git", from: "0.3.0"),
-    .package(url: "https://github.com/kewlbear/XMLDocument.git", from: "1.0.0"),
+    .package(url: "https://github.com/zunda-pixel/XMLDocument.git", branch: "fix-error-in-linux"),
   ],
   targets: [
     .target(
@@ -27,7 +27,7 @@ let package = Package(
         .product(name: "HTTPTypes", package: "swift-http-types"),
         .product(name: "HTTPTypesFoundation", package: "swift-http-types"),
         .product(name: "HTTPClient", package: "http-client"),
-        .product(name: "XMLDocument", package: "XMLDocument"),
+        .product(name: "JebiXML", package: "XMLDocument"),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)

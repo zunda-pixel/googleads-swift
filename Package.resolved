@@ -1,5 +1,5 @@
 {
-  "originHash" : "583c701420e79f4479b13ce8c200b1e8bcc251a79c0407e3a77d15807fc711ca",
+  "originHash" : "52be2944923310c59fe4c410921d0264ea97a911324172d85ce8339fb8e2306c",
   "pins" : [
     {
       "identity" : "http-client",
@@ -22,10 +22,10 @@
     {
       "identity" : "xmldocument",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kewlbear/XMLDocument.git",
+      "location" : "https://github.com/zunda-pixel/XMLDocument.git",
       "state" : {
-        "revision" : "5b78bcc99c3810ffdf099c00ce8fc50a20c37577",
-        "version" : "1.0.0"
+        "branch" : "fix-error-in-linux",
+        "revision" : "574c8efdab8d707b9ba6da4e82147fac9ee981b6"
       }
     }
   ],
