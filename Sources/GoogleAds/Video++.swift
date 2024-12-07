@@ -1,7 +1,7 @@
 import Foundation
 
-#if canImport(JebiXML)
-  import JebiXML
+#if canImport(XMLDocument)
+  import XMLDocument
 #endif
 
 #if canImport(FoundationXML)
@@ -10,7 +10,7 @@ import Foundation
 
 extension Video {
   init(xmlData: Data) throws {
-    #if canImport(JebiXML)
+    #if canImport(XMLDocument)
       let document = try XMLDocument(data: xmlData, options: 0)
     #else
       let document = try XMLDocument(data: xmlData)

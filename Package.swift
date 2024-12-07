@@ -28,11 +28,6 @@ let package = Package(
         .product(name: "HTTPTypesFoundation", package: "swift-http-types"),
         .product(name: "HTTPClient", package: "http-client"),
         .product(
-          name: "JebiXML",
-          package: "XMLDocument",
-          condition: .when(platforms: [.iOS, .tvOS, .watchOS, .visionOS])
-        ),
-        .product(
           name: "XMLDocument",
           package: "XMLDocument",
           condition: .when(platforms: [.iOS, .tvOS, .watchOS, .visionOS])
