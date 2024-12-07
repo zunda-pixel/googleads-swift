@@ -32,6 +32,11 @@ let package = Package(
           package: "XMLDocument",
           condition: .when(platforms: [.iOS, .tvOS, .watchOS, .visionOS])
         ),
+        .product(
+          name: "XMLDocument",
+          package: "XMLDocument",
+          condition: .when(platforms: [.iOS, .tvOS, .watchOS, .visionOS])
+        ),
       ]
     ),
     .testTarget(
