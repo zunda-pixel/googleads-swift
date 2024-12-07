@@ -10,10 +10,10 @@ import Foundation
 
 extension Video {
   init(xmlData: Data) throws {
-    #if os(macOS)
-      let document = try XMLDocument(data: xmlData)
-    #else
+    #if canImport(JebiXML)
       let document = try XMLDocument(data: xmlData, options: 0)
+    #else
+      let document = try XMLDocument(data: xmlData)
     #endif
     guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
       throw DecodingError.dataCorrupted(
