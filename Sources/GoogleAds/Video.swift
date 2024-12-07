@@ -5,7 +5,7 @@ public struct Video: Codable, Sendable, Hashable {
   public var description: String?
   public var duration: Double
   public var advertiser: String?
-  public var impression: [URL]
+  public var impressions: [URL]
   public var trackings: [Tracking]
   public var medias: [Media]
 
@@ -14,7 +14,7 @@ public struct Video: Codable, Sendable, Hashable {
     case description
     case duration
     case advertiser
-    case impression
+    case impressions
     case trackings
     case medias
   }
@@ -31,6 +31,7 @@ public struct Tracking: Codable, Sendable, Hashable {
 }
 
 public struct Media: Codable, Sendable, Hashable {
+  public var url: URL
   public var delivery: String
   public var type: String
   public var bitrate: Int
@@ -40,6 +41,7 @@ public struct Media: Codable, Sendable, Hashable {
   public var maintainAspectRatio: Bool
 
   enum CodingKeys: CodingKey {
+    case url
     case delivery
     case type
     case bitrate

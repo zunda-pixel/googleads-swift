@@ -1,12 +1,20 @@
 import Foundation
 
+#if canImport(XMLDocument)
+  import XMLDocument
+#endif
+
 #if canImport(FoundationXML)
   import FoundationXML
 #endif
 
 extension Video {
   init(xmlData: Data) throws {
-    let document = try XMLDocument(data: xmlData)
+    #if canImport(XMLDocument)
+      let document = try XMLDocument(data: xmlData, options: 0)
+    #else
+      let document = try XMLDocument(data: xmlData)
+    #endif
     guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
       throw DecodingError.dataCorrupted(
         .init(codingPath: [Video.CodingKeys.title], debugDescription: "title is missing"))
@@ -41,7 +49,8 @@ extension Video {
     }
 
     let duration = Double(
-      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2])
+      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
+    )
 
     let advertiser = try document.nodes(forXPath: "//Advertiser").first?.stringValue
 
@@ -51,7 +60,7 @@ extension Video {
       } else {
         throw DecodingError.dataCorrupted(
           .init(
-            codingPath: [Video.CodingKeys.impression], debugDescription: "impression is missing"
+            codingPath: [Video.CodingKeys.impressions], debugDescription: "impressions is missing"
           )
         )
       }
@@ -87,6 +96,13 @@ extension Video {
           )
         )
       }
+
+      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
+        throw DecodingError.dataCorrupted(
+          .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
+        )
+      }
+
       guard let delivery = element.attribute(forName: "delivery")?.stringValue else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Media.CodingKeys.delivery], debugDescription: "delivery is missing")
@@ -131,6 +147,7 @@ extension Video {
       }
 
       return try Media(
+        url: url,
         delivery: delivery,
         type: type,
         bitrate: bitrate,
@@ -146,7 +163,7 @@ extension Video {
       description: description,
       duration: duration,
       advertiser: advertiser,
-      impression: impressions,
+      impressions: impressions,
       trackings: trackings,
       medias: medias
     )
