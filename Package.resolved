@@ -1,5 +1,5 @@
 {
-  "originHash" : "800092eac7fad34e766bee663397bebac2e5227729f6b036867612c6ebebb498",
+  "originHash" : "812255b2dabefab796a774411b29179224b26609e8663c0c96aa8807e44ae3b5",
   "pins" : [
     {
       "identity" : "http-client",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zunda-pixel/XMLDocument.git",
       "state" : {
-        "branch" : "fix-error-linux",
-        "revision" : "23951968fc96a64569e98a117c55ff7ed2332e20"
+        "branch" : "master",
+        "revision" : "cdd52923952964657a088f70c795457ef6ed736e"
       }
     }
   ],
