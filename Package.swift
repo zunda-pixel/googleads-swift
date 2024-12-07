@@ -18,6 +18,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-http-types.git", from: "1.3.1"),
     .package(url: "https://github.com/zunda-pixel/http-client.git", from: "0.3.0"),
+    .package(url: "https://github.com/zunda-pixel/XMLDocument.git", branch: "fix-error-linux"),
   ],
   targets: [
     .target(
@@ -26,6 +27,7 @@ let package = Package(
         .product(name: "HTTPTypes", package: "swift-http-types"),
         .product(name: "HTTPTypesFoundation", package: "swift-http-types"),
         .product(name: "HTTPClient", package: "http-client"),
+        .product(name: "JebiXML", package: "XMLDocument", condition: .when(platforms: [.iOS, .tvOS, .watchOS, .visionOS]))
       ]
     ),
     .testTarget(
@@ -34,8 +36,3 @@ let package = Package(
     ),
   ]
 )
-
-#if !os(macOS) && !os(Linux)
-package.dependencies.append(.package(url: "https://github.com/zunda-pixel/XMLDocument.git", branch: "fix-error-linux"))
-package.targets[0].dependencies.append(.product(name: "JebiXML", package: "XMLDocument"))
-#endif
