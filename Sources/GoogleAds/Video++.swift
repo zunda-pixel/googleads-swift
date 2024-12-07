@@ -1,6 +1,6 @@
 import Foundation
 
-#if !os(macOS) || !os(Linux)
+#if canImport(JebiXML)
   import JebiXML
 #endif
 
