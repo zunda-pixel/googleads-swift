@@ -143,7 +143,9 @@ extension Video {
         width: width,
         height: height,
         scalable: scalable.map { try jsonDecoder.decode(Bool.self, from: Data($0.utf8)) },
-        maintainAspectRatio: maintainAspectRatio.map { try jsonDecoder.decode(Bool.self, from: Data($0.utf8)) }
+        maintainAspectRatio: maintainAspectRatio.map {
+          try jsonDecoder.decode(Bool.self, from: Data($0.utf8))
+        }
       )
     }
 
