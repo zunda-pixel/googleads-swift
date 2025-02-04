@@ -86,7 +86,6 @@ extension Video {
 
       return Tracking(event: event, url: url)
     }
-    let jsonDecoder = JSONDecoder()
 
     let medias = try document.nodes(forXPath: "//MediaFile").map {
       guard let element = $0 as? XMLElement else {
@@ -131,20 +130,10 @@ extension Video {
           .init(codingPath: [Media.CodingKeys.height], debugDescription: "height is missing")
         )
       }
-      guard let scalable = element.attribute(forName: "scalable")?.stringValue else {
-        throw DecodingError.dataCorrupted(
-          .init(codingPath: [Media.CodingKeys.scalable], debugDescription: "scalable is missing")
-        )
-      }
-      guard let maintainAspectRatio = element.attribute(forName: "maintainAspectRatio")?.stringValue
-      else {
-        throw DecodingError.dataCorrupted(
-          .init(
-            codingPath: [Media.CodingKeys.maintainAspectRatio],
-            debugDescription: "maintainAspectRatio is missing"
-          )
-        )
-      }
+      let scalable = element.attribute(forName: "scalable")?.stringValue
+      let maintainAspectRatio = element.attribute(forName: "maintainAspectRatio")?.stringValue
+
+      let jsonDecoder = JSONDecoder()
 
       return try Media(
         url: url,
@@ -153,8 +142,8 @@ extension Video {
         bitrate: bitrate,
         width: width,
         height: height,
-        scalable: jsonDecoder.decode(Bool.self, from: Data(scalable.utf8)),
-        maintainAspectRatio: jsonDecoder.decode(Bool.self, from: Data(maintainAspectRatio.utf8))
+        scalable: scalable.map { try jsonDecoder.decode(Bool.self, from: Data($0.utf8)) },
+        maintainAspectRatio: maintainAspectRatio.map { try jsonDecoder.decode(Bool.self, from: Data($0.utf8)) }
       )
     }
 

@@ -37,8 +37,8 @@ public struct Media: Codable, Sendable, Hashable {
   public var bitrate: Int
   public var width: Int
   public var height: Int
-  public var scalable: Bool
-  public var maintainAspectRatio: Bool
+  public var scalable: Bool?
+  public var maintainAspectRatio: Bool?
 
   enum CodingKeys: CodingKey {
     case url
