@@ -79,22 +79,20 @@ public struct Ad: Decodable, Sendable, Hashable {
       } else if let templateId = Int(try container.decode(String.self, forKey: .template)) {
         templateId
       } else {
-        throw DecodingError.dataCorrupted(
-          .init(
-            codingPath: container.codingPath + [CodingKeys.template],
-            debugDescription: "template_id is not Number"
-          )
+        throw DecodingError.dataCorruptedError(
+          forKey: .template,
+          in: container,
+          debugDescription: "template_id is not valid Int"
         )
       }
 
     if let template = Template(rawValue: templateId) {
       self.template = template
     } else {
-      throw DecodingError.dataCorrupted(
-        .init(
-          codingPath: container.codingPath + [CodingKeys.template],
-          debugDescription: "template_id is not valid AdTemplate \(templateId)"
-        )
+      throw DecodingError.dataCorruptedError(
+        forKey: .template,
+        in: container,
+        debugDescription: "template_id is not valid AdTemplate \(templateId)"
       )
     }
     self.callToCction = try container.decode(String.self, forKey: .callToCction)
