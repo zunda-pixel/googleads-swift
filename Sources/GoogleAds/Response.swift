@@ -193,7 +193,7 @@ public struct TrackingUrlsAndAction: Codable, Sendable, Hashable {
 
 public struct ClickActions: Codable, Sendable, Hashable {
   public var type: Int
-  public var url: URL
+  public var url: URL?
   public var u2FinalUrl: URL?
 
   private enum CodingKeys: String, CodingKey {
