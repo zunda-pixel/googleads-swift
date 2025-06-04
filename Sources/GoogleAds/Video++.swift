@@ -15,10 +15,7 @@ extension Video {
     #else
       let document = try XMLDocument(data: xmlData)
     #endif
-    guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
-      throw DecodingError.dataCorrupted(
-        .init(codingPath: [Video.CodingKeys.title], debugDescription: "title is missing"))
-    }
+    let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue
 
     let description = try document.nodes(forXPath: "//Description").first?.stringValue
 

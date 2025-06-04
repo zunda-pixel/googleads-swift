@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Video: Codable, Sendable, Hashable {
-  public var title: String
+  public var title: String?
   public var description: String?
   public var duration: Double?
   public var advertiser: String?
