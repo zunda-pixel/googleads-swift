@@ -93,11 +93,7 @@ extension Video {
         )
       }
 
-      guard let url = $0.stringValue.flatMap({ URL(string: $0) }) else {
-        throw DecodingError.dataCorrupted(
-          .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
-        )
-      }
+      let url = $0.stringValue.flatMap({ URL(string: $0) })
 
       guard let delivery = element.attribute(forName: "delivery")?.stringValue else {
         throw DecodingError.dataCorrupted(
