@@ -55,7 +55,7 @@ extension Video {
     let advertiser = try document.nodes(forXPath: "//Advertiser").first?.stringValue
 
     let impressions = try document.nodes(forXPath: "//Impression").map {
-      if let url = $0.stringValue.map({ URL(string: $0) }) as? URL {
+      if let url = $0.stringValue.flatMap({ URL(string: $0) }) {
         return url
       } else {
         throw DecodingError.dataCorrupted(
@@ -78,7 +78,7 @@ extension Video {
         )
       }
 
-      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
+      guard let url = $0.stringValue.flatMap({ URL(string: $0) }) else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Tracking.CodingKeys.event], debugDescription: "event is missing")
         )
@@ -96,7 +96,7 @@ extension Video {
         )
       }
 
-      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
+      guard let url = $0.stringValue.flatMap({ URL(string: $0) }) else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
         )
