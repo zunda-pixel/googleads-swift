@@ -15,22 +15,13 @@ extension Video {
     #else
       let document = try XMLDocument(data: xmlData)
     #endif
-    guard let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue else {
-      throw DecodingError.dataCorrupted(
-        .init(codingPath: [Video.CodingKeys.title], debugDescription: "title is missing"))
-    }
+    let title = try document.nodes(forXPath: "//AdTitle").first?.stringValue
 
     let description = try document.nodes(forXPath: "//Description").first?.stringValue
 
-    guard let durationString = try document.nodes(forXPath: "//Duration").first?.stringValue else {
-      throw DecodingError.dataCorrupted(
-        .init(
-          codingPath: [Video.CodingKeys.description], debugDescription: "description is missing"
-        )
-      )
-    }
+    let durationString = try document.nodes(forXPath: "//Duration").first?.stringValue
 
-    let durationComponents = try durationString.split(separator: ":").map {
+    let durationComponents = try durationString?.split(separator: ":").map {
       if let int = Int($0) {
         return int
       } else {
@@ -42,20 +33,26 @@ extension Video {
       }
     }
 
-    guard durationComponents.count == 3 else {
-      throw DecodingError.dataCorrupted(
-        .init(codingPath: [Video.CodingKeys.duration], debugDescription: "duration is missing")
-      )
-    }
+    let duration: Double?
 
-    let duration = Double(
-      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
-    )
+    if let durationComponents {
+      guard durationComponents.count == 3 else {
+        throw DecodingError.dataCorrupted(
+          .init(codingPath: [Video.CodingKeys.duration], debugDescription: "duration is missing")
+        )
+      }
+
+      duration = Double(
+        durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
+      )
+    } else {
+      duration = nil
+    }
 
     let advertiser = try document.nodes(forXPath: "//Advertiser").first?.stringValue
 
     let impressions = try document.nodes(forXPath: "//Impression").map {
-      if let url = $0.stringValue.map({ URL(string: $0) }) as? URL {
+      if let url = $0.stringValue.flatMap({ URL(string: $0) }) {
         return url
       } else {
         throw DecodingError.dataCorrupted(
@@ -78,7 +75,7 @@ extension Video {
         )
       }
 
-      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
+      guard let url = $0.stringValue.flatMap({ URL(string: $0) }) else {
         throw DecodingError.dataCorrupted(
           .init(codingPath: [Tracking.CodingKeys.event], debugDescription: "event is missing")
         )
@@ -96,11 +93,7 @@ extension Video {
         )
       }
 
-      guard let url = $0.stringValue.map({ URL(string: $0) }) as? URL else {
-        throw DecodingError.dataCorrupted(
-          .init(codingPath: [Media.CodingKeys.url], debugDescription: "url is missing")
-        )
-      }
+      let url = $0.stringValue.flatMap({ URL(string: $0) })
 
       guard let delivery = element.attribute(forName: "delivery")?.stringValue else {
         throw DecodingError.dataCorrupted(

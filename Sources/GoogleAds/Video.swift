@@ -1,9 +1,9 @@
 import Foundation
 
 public struct Video: Codable, Sendable, Hashable {
-  public var title: String
+  public var title: String?
   public var description: String?
-  public var duration: Double
+  public var duration: Double?
   public var advertiser: String?
   public var impressions: [URL]
   public var trackings: [Tracking]
@@ -31,7 +31,7 @@ public struct Tracking: Codable, Sendable, Hashable {
 }
 
 public struct Media: Codable, Sendable, Hashable {
-  public var url: URL
+  public var url: URL?
   public var delivery: String
   public var type: String
   public var bitrate: Int
