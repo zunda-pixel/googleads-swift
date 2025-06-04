@@ -21,9 +21,9 @@ extension Video {
     }
 
     let description = try document.nodes(forXPath: "//Description").first?.stringValue
-    
+
     let durationString = try document.nodes(forXPath: "//Duration").first?.stringValue
-    
+
     let durationComponents = try durationString?.split(separator: ":").map {
       if let int = Int($0) {
         return int
