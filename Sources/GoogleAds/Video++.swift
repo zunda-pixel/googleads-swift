@@ -21,16 +21,10 @@ extension Video {
     }
 
     let description = try document.nodes(forXPath: "//Description").first?.stringValue
-
-    guard let durationString = try document.nodes(forXPath: "//Duration").first?.stringValue else {
-      throw DecodingError.dataCorrupted(
-        .init(
-          codingPath: [Video.CodingKeys.description], debugDescription: "description is missing"
-        )
-      )
-    }
-
-    let durationComponents = try durationString.split(separator: ":").map {
+    
+    let durationString = try document.nodes(forXPath: "//Duration").first?.stringValue
+    
+    let durationComponents = try durationString?.split(separator: ":").map {
       if let int = Int($0) {
         return int
       } else {
@@ -42,15 +36,21 @@ extension Video {
       }
     }
 
-    guard durationComponents.count == 3 else {
-      throw DecodingError.dataCorrupted(
-        .init(codingPath: [Video.CodingKeys.duration], debugDescription: "duration is missing")
-      )
-    }
+    let duration: Double?
 
-    let duration = Double(
-      durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
-    )
+    if let durationComponents {
+      guard durationComponents.count == 3 else {
+        throw DecodingError.dataCorrupted(
+          .init(codingPath: [Video.CodingKeys.duration], debugDescription: "duration is missing")
+        )
+      }
+
+      duration = Double(
+        durationComponents[0] * 3600 + durationComponents[1] * 60 + durationComponents[2]
+      )
+    } else {
+      duration = nil
+    }
 
     let advertiser = try document.nodes(forXPath: "//Advertiser").first?.stringValue
 
