@@ -6,7 +6,7 @@ import HTTPTypesFoundation
 public struct GoogleAdsClient<HTTPClient: HTTPClientProtocol & Sendable>: Sendable {
   public var httpClient: HTTPClient
   public var baseUrl = URL(string: "https://googleads.g.doubleclick.net/")!
-  public var framework: String = "afma-sdk-i-v12.6.0"
+  public var framework: String = "afma-sdk-i-v12.7.0"
   public var isTest: Bool
   public var clientId: String
   public var language: String
