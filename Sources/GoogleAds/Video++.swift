@@ -1,7 +1,7 @@
-import Foundation
 import DOMParser
-import XPath
+import Foundation
 import XMLCore
+import XPath
 
 extension Video {
   init(xmlData: Data) throws {
@@ -128,17 +128,17 @@ extension Video {
   }
 }
 
-private extension Document {
-  func nodes(forXPath expression: String) throws -> [Document.Reference] {
+extension Document {
+  fileprivate func nodes(forXPath expression: String) throws -> [Document.Reference] {
     try XPath.Expression.parse(expression)
       .nodes(in: self, with: XPath.Context(node: self.root))
   }
 
-  func firstString(forXPath expression: String) throws -> String? {
+  fileprivate func firstString(forXPath expression: String) throws -> String? {
     try nodes(forXPath: expression).first.map { stringValue(of: $0) }
   }
 
-  func stringValue(of reference: Document.Reference) -> String {
+  fileprivate func stringValue(of reference: Document.Reference) -> String {
     let view = self.view(of: reference)
     switch view.kind {
     case .document, .element:
@@ -155,7 +155,7 @@ private extension Document {
     }
   }
 
-  func attribute(named name: String, of reference: Document.Reference) -> String? {
+  fileprivate func attribute(named name: String, of reference: Document.Reference) -> String? {
     var attribute = self.firstAttribute(of: reference)
     while let current = attribute {
       let view = self.view(of: current)
@@ -171,8 +171,8 @@ private extension Document {
   }
 }
 
-private extension String {
-  init(decoding bytes: borrowing Span<XML.Byte>) {
+extension String {
+  fileprivate init(decoding bytes: borrowing Span<XML.Byte>) {
     self = bytes.withUnsafeBufferPointer { String(decoding: $0, as: UTF8.self) }
   }
 }
