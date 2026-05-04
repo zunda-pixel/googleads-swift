@@ -1,5 +1,5 @@
 {
-  "originHash" : "bfe46afc84394ac3e4aa72283c3cdbe76e61fe8fa941c62df9a18bad3c244882",
+  "originHash" : "9e84f70ea25a037130bf301179218fc50a464fcda8bf46a08e5f5e89384afc35",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -209,12 +209,12 @@
       }
     },
     {
-      "identity" : "xmldocument",
+      "identity" : "xylem",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kewlbear/XMLDocument.git",
+      "location" : "https://github.com/compnerd/xylem.git",
       "state" : {
-        "revision" : "5b78bcc99c3810ffdf099c00ce8fc50a20c37577",
-        "version" : "1.0.0"
+        "branch" : "main",
+        "revision" : "998ee02213af96938211c82d401b017bbba353ec"
       }
     }
   ],
